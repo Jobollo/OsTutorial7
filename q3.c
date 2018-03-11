@@ -21,7 +21,8 @@ void SIGINT_handler(int);
 int main( void ) {
 	char *argv[3] = {"Command-line", ".", NULL};
 
-	int ppid, pid = fork();
+	int pid = fork();
+	int ppid;
 	gid_t gid;
 	
 	if (signal(SIGINT, SIGINT_handler) == SIG_ERR) {
@@ -29,8 +30,7 @@ int main( void ) {
 		exit(1);
 	}
 	if ( pid == 0 ) {
-		execvp( "process", argv );
-		
+		execvp("process", argv );	
 	}
 	
 	if ((pid = getpid()) < 0) {
@@ -56,10 +56,8 @@ int main( void ) {
 	sleep(5);
 	kill(pid, SIGINT);
 	/* Put the parent to sleep for 2 seconds--let the child finished executing */
-	//wait( 2 );
+	wait( 2 );
 
-	//printf( "Finished executing the parent process\n"
-	//        " - the child won't get here--you will only see this once\n" );
 
 	return 0;
 }
