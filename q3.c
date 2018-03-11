@@ -21,41 +21,22 @@ void SIGINT_handler(int);
 int main( void ) {
 	char *argv[3] = {"Command-line", ".", NULL};
 
-	int pid = fork();
-	int ppid;
-	gid_t gid;
+	pid_t pid = fork();
 	
 	if (signal(SIGINT, SIGINT_handler) == SIG_ERR) {
 		printf("SIGINT install error\n");
 		exit(1);
 	}
 	if ( pid == 0 ) {
-		execvp("process", argv );	
+		static char *argv[]={NULL};
+		execv("process", argv );
+		exit(1);
 	}
-	
-	if ((pid = getpid()) < 0) {
-	  perror("unable to get pid\n");
-	} else {
-	  printf("The process id is %d\n", pid);
-	}
-
-	/* get the parent process id */
-	if ((ppid = getppid()) < 0) {
-	  perror("unable to get the ppid\n");
-	} else {
-	  printf("The parent process id is %d\n", ppid);
-	}
-
-	/* get the group process id */
-	if ((gid = getgid()) < 0) {
-	  perror("unable to get the group id\n");
-	} else {
-	  printf("The group id is %d\n", gid);
-	}	
+		
 	
 	sleep(5);
 	kill(pid, SIGINT);
-	/* Put the parent to sleep for 2 seconds--let the child finished executing */
+
 	wait( 2 );
 
 
