@@ -17,17 +17,23 @@ typedef struct node{
     struct node* next;
 }node_t;
 node_t * head = NULL;
+node_t * tail = NULL;
 node_t * new_node;
 
-void push(node_t ** head, proc process) {
+void push(proc process) {
     node_t * new_node;
     new_node = malloc(sizeof(node_t));
 
     new_node->process = process;
-    new_node->next = *head;
-    *head = new_node;
+    new_node->next = NULL;
+    if(head == NULL && tail == NULL){
+	head = tail = new_node;
+	return;
+    }
+    tail->next = new_node;
+    tail = new_node;
 }
-void print_list(node_t * head) {
+void print_list() {
     node_t * current = head;
 
     while (current != NULL) {
@@ -70,13 +76,13 @@ int main(void)
 			    token = strtok(NULL,s);
 			}                     
 		    }
-		    push(&new_node,process);
+		    push(process);
 		}
 		fclose(fp);
 	} else {
 	perror("processes.txt");
 	}   
-	print_list(new_node);
+	print_list();
 }   
 
 
