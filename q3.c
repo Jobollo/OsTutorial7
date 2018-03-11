@@ -4,18 +4,6 @@
 #include  <sys/ipc.h>
 #include  <sys/shm.h>
 
-/* This program forks and and the prints whether the process is
- *   - the child (the return value of fork() is 0), or
- *   - the parent (the return value of fork() is not zero)
- *
- * When this was run 100 times on the computer the author is
- * on, only twice did the parent process execute before the
- * child process executed.
- *
- * Note, if you juxtapose two strings, the compiler automatically
- * concatenates the two, e.g., "Hello " "world!"
- */
-
 void SIGINT_handler(int);
 
 int main( void ) {
@@ -36,10 +24,7 @@ int main( void ) {
 	
 	sleep(5);
 	kill(pid, SIGINT);
-
 	wait( 2 );
-
-
 	return 0;
 }
 
