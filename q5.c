@@ -7,7 +7,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
-
+/*
+delete_name() does not return anything, so does delete_pid
+pop() segfaults when i use it the way i did. had to delete free(new_node);
+*/
 typedef struct{
 	char name[256];
 	int priority,pid,runtime;
