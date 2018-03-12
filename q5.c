@@ -138,7 +138,7 @@ int main(void)
 	} 
 	int cpr;
 	print_list();
-	printf("\n");
+	printf("processing\n");
 	node_t * current = head;
 	//char *argv[3] = {"Command-line", ".", NULL};
 	int status;//for waitpid
@@ -179,6 +179,8 @@ int main(void)
 		
 		current = current->next;
 	}
+	//testing if queue is empty
+	pop();
 }   
 
 
